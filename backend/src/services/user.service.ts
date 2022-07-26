@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { User, UserDocument } from "../models/user.schema";
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { secret } from 'src/utils/constatnt';
 
 @Injectable()
 export class UserService {
@@ -37,7 +38,7 @@ export class UserService {
             if (bcrypt.compare(user.password, password)) {
                 const payload = { email: user.email };  
                 return {
-                    token: jwt.sign(payload),
+                    token: jwt.sign(payload, { secret: secret }),
                     type : user.accountType,
                     status : user.status,
                 };
