@@ -5,28 +5,36 @@ import { JwtService } from '@nestjs/jwt'
 
 @Controller('/api/user')
 export class UserController {
-    constructor(private readonly userServerice: UserService,
+    constructor(private readonly userService: UserService,
         private jwtService: JwtService
     ) 
     {}
+
+    //Sign up function for student and admin can add user with tempory password
     @Post('/signup')
     async Signup(@Res() response, @Body() user: User) {
-        const newUSer = await this.userServerice.signup(user);
+        const newUSer = await this.userService.signup(user);
         return response.status(HttpStatus.CREATED).json({
             newUSer
         })
     }
+
+    //Sign in function for student
     @Post('/signin')
     async SignIn(@Res() response, @Body() user: User) {
-        const token = await this.userServerice.signin(user, this.jwtService);
+        const token = await this.userService.signin(user, this.jwtService);
         return response.status(HttpStatus.OK).json(token)
     }
-    @Get()
+
+    //Get all users for admin panel
+    @Get('/allUsers')
     async index() {
-      return await this.userServerice.findAll();
+      return await this.userService.findAll();
     }
-    @Get(':id')
-    async find(@Param('id') id: string) {
-        return await this.userServerice.findOne(id);
+
+    //Get details of selected user
+    @Get('/getUser:id')
+    async find(@Param('id') id: number) {
+        return await this.userService.findOne(id);
     }
 }
