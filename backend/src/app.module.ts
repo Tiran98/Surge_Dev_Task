@@ -9,6 +9,8 @@ import { join } from 'path/posix';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
+import { NoteController } from './controllers/note.controller';
+import { NoteService } from './services/note.service';
 
 @Module({
   imports: [
@@ -32,7 +34,7 @@ import { UserService } from './services/user.service';
       }
     })
   ],
-  controllers: [AppController,UserController],
-  providers: [AppService,UserService],
+  controllers: [AppController,UserController,NoteController],
+  providers: [AppService,UserService,NoteService],
 })
 export class AppModule {}
