@@ -10,15 +10,15 @@ export class User {
     lastName: string;
     @Prop({required:true, unique:true, lowercase:true})
     email: string;
-    @Prop({required:true})
+    @Prop({required:false})
     datOfBirth: Date
-    @Prop({required:true})
+    @Prop({required:false})
     mobile: number
     @Prop({required:true})
     status: boolean
     @Prop({required:true})
     password: string
-    @Prop({required:true})
+    @Prop({required:false})
     accountType: string
     @Prop({default: Date.now() })
     createdDate: Date

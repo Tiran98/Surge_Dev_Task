@@ -47,4 +47,12 @@ export class UserService {
         return new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
     }
 
+    async findAll(): Promise<User[]> {
+        return await this.userModel.find().exec();
+    }
+
+    async findOne(id: string): Promise<User> {
+        return await this.userModel.findById(id).exec();
+    }
+
 }
