@@ -19,8 +19,7 @@ export class AdminSeed {
             mobile : 9999999999,
             status : false,
             password: 'password',
-            accountType: 'Admin',
-            createdDate: new Date('2001-02-05')
+            accountType: 'Admin'
         });
         console.log(admin);
     }

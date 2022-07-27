@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Post, UploadedFiles, 
 import { User } from "../models/user.schema";
 import { UserService } from "../services/user.service";
 import { JwtService } from '@nestjs/jwt'
+import { response } from "express";
 
 @Controller('/api/user')
 export class UserController {
@@ -23,7 +24,20 @@ export class UserController {
     @Post('/signin')
     async SignIn(@Res() response, @Body() user: User) {
         const token = await this.userService.signin(user, this.jwtService);
-        return response.status(HttpStatus.OK).json(token)
+        console.log(token)
+        let foundUser = token.foundUser;
+        if(token.status === "True"){
+            return response.status(HttpStatus.OK).json({
+                token : token,
+                user,
+                foundUser
+            })
+        }else{
+            return response.status(HttpStatus.OK).json({
+                message: "Inavalid Credentials"
+            })
+        }
+        
     }
 
     //Get all users for admin panel
@@ -36,5 +50,21 @@ export class UserController {
     @Get('/getUser:id')
     async find(@Param('id') id: number) {
         return await this.userService.findOne(id);
+    }
+
+    //Get details from email of selected user
+    @Get('/getUseremail')
+    async findbyEmail(@Res() response,@Body() user:User) {
+        const result = await this.userService.findMail(user);
+        if(result.message == "User Found"){
+            return response.status(HttpStatus.OK).json({
+                user
+            })
+        }else{
+            return response.status(HttpStatus.OK).json({
+                message: "Inavalid email"
+            })
+        }
+        
     }
 }
