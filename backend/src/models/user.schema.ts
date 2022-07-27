@@ -20,7 +20,5 @@ export class User {
     password: string
     @Prop({required:false})
     accountType: string
-    @Prop({default: Date.now() })
-    createdDate: Date
 }
 export const UserSchema = SchemaFactory.createForClass(User)

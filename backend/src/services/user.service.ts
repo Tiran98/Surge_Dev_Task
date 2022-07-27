@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus, Query } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User, UserDocument } from "../models/user.schema";
@@ -23,8 +23,7 @@ export class UserService {
             mobile: user.mobile,
             status: user.status,
             password: hash,
-            accountType: user.accountType,
-            createdDate: user.createdDate
+            accountType: user.accountType
         }
         const newUser = new this.userModel(reqBody);
         return newUser.save();
@@ -32,15 +31,17 @@ export class UserService {
 
     async signin(user: User, jwt: JwtService): Promise<any> {
         const foundUser = await this.userModel.findOne({ email: user.email }).exec();
+        console.log(foundUser)
         if (foundUser) {
             const { password } = foundUser;
-            
-            if (bcrypt.compare(user.password, password)) {
+            console.log(user.password)
+            console.log(password)
+            if (await bcrypt.compareSync(user.password, password)) {
                 const payload = { email: user.email };  
                 return {
                     token: jwt.sign(payload, { secret: secret }),
-                    type : user.accountType,
-                    status : user.status,
+                    status : "True",
+                    foundUser
                 };
             }
             return new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED)
@@ -54,6 +55,19 @@ export class UserService {
 
     async findOne(id: number): Promise<User> {
         return await this.userModel.findById(id).exec();
+    }
+
+    async findMail(user: User): Promise<any> {
+        const foundEmail = await this.userModel.findOne({email: user.email}).exec();
+        if(foundEmail) {
+            return {
+                foundEmail,
+                message: "User Found"
+            }
+        }
+        return {
+            message: "Invalid Email"
+        }
     }
 
 }
