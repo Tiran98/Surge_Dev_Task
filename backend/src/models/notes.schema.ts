@@ -11,7 +11,5 @@ export class Note {
     title: string;
     @Prop({required:true})
     description: string;
-    @Prop({default: Date.now() })
-    createdDate: Date
 }
 export const NoteSchema = SchemaFactory.createForClass(Note)
