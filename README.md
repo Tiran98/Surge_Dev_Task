@@ -29,7 +29,7 @@ then, you can run:
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Starting the Express server
+### Starting the Nest server
 
 In the <b><i>api</i></b> directory, first:
 
