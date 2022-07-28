@@ -19,25 +19,25 @@ export class NoteController {
     }
 
     //Get all notes for the user
-    @Get('/allNotes:userId')
+    @Get('/allNotes/:userId')
     async index(@Param('userId') userId: number) {
       return await this.noteService.findAll(userId);
     }
 
     //Get note details for selected id
-    @Get('/getNote:id')
+    @Get('/getNote/:id')
     async find(@Param('id') id: number) {
         return await this.noteService.findOne(id);
     }
-
+ 
     //Update note details with new changes
-    @Put('/updateNote:id')
-    async update(@Param('id') id: number, @Body() note: Note) {
-        return await this.noteService.update(note,id);
+    @Put('/updateNote/:id')
+    async update(@Param('id') id, @Body() note: Note) {
+        return await this.noteService.update(id,note);
     }
 
     //Delete selected note for selected User
-    @Delete('/deleteNote:id')
+    @Delete('/deleteNote/:id')
     async delete(@Param('id') id: number) {
         return await this.noteService.delete(id);
      }

@@ -14,16 +14,15 @@ export class NoteService {
             id: note.id,
             userId: note.userId,
             title: note.title,
-            description: note.description,
-            createdDate: note.createdDate
+            description: note.description
         }
         const newNote = new this.noteModel(reqBody);
         return newNote.save();
     }
 
     //Service for get all notes for current user
-    async findAll(@Query('userId') userId): Promise<Note[]> {
-        return await this.noteModel.find(userId).exec();
+    async findAll(userId: number): Promise<Note[]> {
+        return await this.noteModel.find({userId: userId}).exec();
     }
 
     //Service for get selected note details
@@ -32,14 +31,14 @@ export class NoteService {
     }
 
     //Service for Update selected note with new changes
-    async update(note: Note,id: number): Promise<Note> {
+    async update(id, note: Note): Promise<Note> {
         const reqBody ={
             id: note.id,
+            userId: note.userId,
             title: note.title,
             description: note.description,
-            createdDate: note.createdDate
         }
-        return await this.noteModel.findByIdAndUpdate(id, reqBody).exec();
+        return await this.noteModel.findByIdAndUpdate(id, reqBody, {new: true}).exec();
     }
     
     //Service for Delete note for current user

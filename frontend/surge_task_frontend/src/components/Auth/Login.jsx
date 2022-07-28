@@ -46,10 +46,12 @@ const Login = () => {
               });
                 let userType = response.data.foundUser.accountType;
                 let userStatus = response.data.foundUser.status;
+                let userId = response.data.foundUser.id;
 
                 if(userType === "Admin"){
-                  navigate('/login');
+                  navigate('/UserList');
                   console.log("Admin");
+                  localStorage.setItem("userId", userId)
                 }
                 else {
                   console.log("Student")
@@ -58,8 +60,9 @@ const Login = () => {
                     console.log("First Time");
                   }
                   else {
-                    navigate('/login');
+                    navigate('/NoteList');
                     console.log("Not First Time")
+                    localStorage.setItem("userId", userId)
                   }
                 }
             }

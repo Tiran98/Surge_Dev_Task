@@ -4,9 +4,9 @@ export type UserDocument = User & Document;
 export class User {
     @Prop({required:true})
     id: number;
-    @Prop({required:true})
+    @Prop({required:false})
     firstName: string;
-    @Prop({required:true})
+    @Prop({required:false})
     lastName: string;
     @Prop({required:true, unique:true, lowercase:true})
     email: string;

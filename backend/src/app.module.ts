@@ -11,6 +11,7 @@ import { AdminSeed } from './models/admin.seed';
 import { UserModule } from './modules/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './modules/email.module';
+import { NoteModule } from './modules/note.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EmailModule } from './modules/email.module';
     
     UserModule,
     EmailModule,
+    NoteModule,
 
   ],
   controllers: [AppController],
